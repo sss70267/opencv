@@ -5,25 +5,25 @@ image = cv2.imread('coins2.png')
 print(image.shape) #(448, 599, 3)
 r = 450/image.shape[0] #1.0044642857142858
 print(r)
-dim = (int(image.shape[1]*r),450)#(601, 450)
+dim = (int(image.shape[1]*r),450)#(601, 450)統一大小
 print(dim)
 
 
 resized = cv2.resize(image,dim,interpolation = cv2.INTER_AREA)
-gray= cv2.cvtColor(resized,cv2.COLOR_BGR2GRAY)
+gray= cv2.cvtColor(resized,cv2.COLOR_BGR2GRAY)#灰階轉換
 cv2.imwrite('coins2_1.png',gray)
 
 
-blurred = cv2.GaussianBlur(gray,(11,11),0)
+blurred = cv2.GaussianBlur(gray,(11,11),0)#模糊化
 cv2.imwrite('coins2_blurred.png',blurred)
 
 
-edged = cv2.Canny(blurred,30,150)
+edged = cv2.Canny(blurred,30,150)#找到邊線
 cv2.imwrite('coins2_edged.png',edged)
 
 
-kernel = cv2.getStructuringElement(cv2.MORPH_RECT,(10,10))
-close = cv2.morphologyEx(edged,cv2.MORPH_CLOSE,kernel)
+kernel = cv2.getStructuringElement(cv2.MORPH_RECT,(10,10))#建立遮罩
+close = cv2.morphologyEx(edged,cv2.MORPH_CLOSE,kernel)#關閉破損邊緣
 cv2.imwrite('close.png',close)
 
 
